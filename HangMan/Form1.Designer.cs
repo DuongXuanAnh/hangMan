@@ -30,6 +30,8 @@ namespace HangMan
         private void InitializeComponent()
         {
             this.canvas = new System.Windows.Forms.PictureBox();
+            this.pnl_alphabet = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,11 +46,29 @@ namespace HangMan
             this.canvas.TabStop = false;
             this.canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.canvas_Paint);
             // 
+            // pnl_alphabet
+            // 
+            this.pnl_alphabet.BackColor = System.Drawing.SystemColors.Control;
+            this.pnl_alphabet.Location = new System.Drawing.Point(474, 322);
+            this.pnl_alphabet.Name = "pnl_alphabet";
+            this.pnl_alphabet.Size = new System.Drawing.Size(561, 127);
+            this.pnl_alphabet.TabIndex = 1;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panel1.Location = new System.Drawing.Point(474, 13);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(561, 303);
+            this.panel1.TabIndex = 2;
+            // 
             // HangMan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1219, 465);
+            this.ClientSize = new System.Drawing.Size(1055, 465);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnl_alphabet);
             this.Controls.Add(this.canvas);
             this.Name = "HangMan";
             this.Text = "Hang Man";
@@ -60,6 +80,8 @@ namespace HangMan
         #endregion
 
         private System.Windows.Forms.PictureBox canvas;
+        private System.Windows.Forms.Panel pnl_alphabet;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
