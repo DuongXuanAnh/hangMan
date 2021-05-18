@@ -13,17 +13,18 @@ namespace HangMan
 {
     public partial class HangMan : Form
     {
+        Label ourWord = new Label();
+        List<string> displayWord = new List<string>();
+        string answerWord;
         
+
         public HangMan()
         {
             InitializeComponent();
             generateAlphabet();
-
-           
-            //MessageBox.Show(GetRandomWordFromFile());
-
+            answerWord = wordNeedToFind();
             generateWord();
-
+            
         }
 
         private void canvas_Paint(object sender, PaintEventArgs e)
@@ -34,7 +35,7 @@ namespace HangMan
             GenerateGallows(g);
 
             // Head
-            g.DrawEllipse(p, 250 - 65/2, 70, 65, 65);
+            g.DrawEllipse(p, 250 - 65 / 2, 70, 65, 65);
             // Body
             g.DrawLine(p, new Point(250, 135), new Point(250, 250));
             // Right leg
@@ -92,35 +93,34 @@ namespace HangMan
         void alphabetCharacter_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            
+            for (int i = 0; i < answerWord.Length; i++)
+            {
+                if(btn.Text == answerWord[i].ToString())
+                {
+                    displayWord[i] = btn.Text + " ";
+                }
+            }
+
+            ourWord.Text = String.Join("", displayWord.ToArray());
         }
 
         void generateWord()
         {
-            string abc = "ČESKÁ REPUBLIKA";
-            Label ourWord = new Label();
-            ourWord.Name = "ourWord";
-
-            //ourWord.Text = "_ U O _   _ _ _   _ _ _";
-
-            for (int i = 0; i < abc.Length; i++)
+            for (int i = 0; i < answerWord.Length; i++)
             {
-                if(abc[i].ToString() == "Z")
-                {
-                    ourWord.Text += abc[i] + " ";
-                }
-                else if(abc[i].ToString() == " ")
+                if (answerWord[i].ToString() == " ")
                 {
                     ourWord.Text += "   ";
+                    displayWord.Add("   ");
                 }
                 else
                 {
                     ourWord.Text += "_ ";
+                    displayWord.Add("_ ");
                 }
 
             }
             ourWord.Text = ourWord.Text.Remove(ourWord.Text.Length - 1);
-
             ourWord.Font = new Font("Arial", 20);
             ourWord.Size = new Size(panel1.Width, panel1.Height);
             ourWord.TextAlign = ContentAlignment.MiddleCenter;
@@ -132,7 +132,7 @@ namespace HangMan
 
         string wordNeedToFind()
         {
-            int level = 1;
+            int level = 2;
             readWordFromFile(level);
             return randomWordFromFile();
         }
@@ -153,7 +153,7 @@ namespace HangMan
             Random rd = new Random();
             return ourWord[rd.Next(ourWord.Count)];
         }
-
+        
         void readWordFromFile(int level)
         {
             switch (level)
