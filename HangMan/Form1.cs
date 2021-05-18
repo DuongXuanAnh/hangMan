@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace HangMan
         {
             InitializeComponent();
             generateAlphabet();
-            answerWord = wordNeedToFind();
+            answerWord = wordNeedToFind().ToUpper();
             generateWord();
             
         }
@@ -95,9 +96,9 @@ namespace HangMan
             Button btn = sender as Button;
             for (int i = 0; i < answerWord.Length; i++)
             {
-                if(btn.Text == answerWord[i].ToString())
+                if(btn.Text == RemoveDiacritics(answerWord[i].ToString()))
                 {
-                    displayWord[i] = btn.Text + " ";
+                    displayWord[i] = answerWord[i] + " ";
                 }
             }
 
@@ -181,6 +182,23 @@ namespace HangMan
                     break;
 
             }
+        }
+
+        static string RemoveDiacritics(string text)
+        {
+            var normalizedString = text.Normalize(NormalizationForm.FormD);
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in normalizedString)
+            {
+                var unicodeCategory = CharUnicodeInfo.GetUnicodeCategory(c);
+                if (unicodeCategory != UnicodeCategory.NonSpacingMark)
+                {
+                    stringBuilder.Append(c);
+                }
+            }
+
+            return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
     }
 }
