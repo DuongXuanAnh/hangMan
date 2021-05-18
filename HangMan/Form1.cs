@@ -17,14 +17,14 @@ namespace HangMan
         Label ourWord = new Label();
         List<string> displayWord = new List<string>();
         string answerWord;
-        
+        int numberOfBodyPart = 0;
 
         public HangMan()
         {
             InitializeComponent();
             generateAlphabet();
             answerWord = wordNeedToFind().ToUpper();
-            generateWord();
+            generateWordWithHiddenChars();
             
         }
 
@@ -34,25 +34,36 @@ namespace HangMan
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             Pen p = new Pen(Color.Black, 2);
             GenerateGallows(g);
-
-            // Head
-            g.DrawEllipse(p, 250 - 65 / 2, 70, 65, 65);
-            // Body
-            g.DrawLine(p, new Point(250, 135), new Point(250, 250));
-            // Right leg
-            g.DrawLine(p, new Point(250, 250), new Point(300, 370));
-            // Left leg
-            g.DrawLine(p, new Point(250, 250), new Point(200, 370));
-            // Right arm
-            g.DrawLine(p, new Point(250, 150), new Point(300, 250));
-            // Left arm
-            g.DrawLine(p, new Point(250, 150), new Point(200, 250));
-            // Dead
-            g.DrawLine(p, new Point(210, 145), new Point(290, 145));
-
+            GenerateBodyPart(g, p, numberOfBodyPart);
+    
         }
 
-        void GenerateGallows(Graphics g)
+        void GenerateBodyPart(Graphics g, Pen p, int numberOfBodyPart)
+        {
+            // Head
+            if (numberOfBodyPart > 0)              
+                g.DrawEllipse(p, 250 - 65 / 2, 70, 65, 65);
+            // Body
+            if (numberOfBodyPart > 1)
+                g.DrawLine(p, new Point(250, 135), new Point(250, 250));
+            // Right leg
+            if (numberOfBodyPart > 2)
+                g.DrawLine(p, new Point(250, 250), new Point(300, 370));
+            // Left leg
+            if (numberOfBodyPart > 3)
+                g.DrawLine(p, new Point(250, 250), new Point(200, 370));
+            // Right arm
+            if (numberOfBodyPart > 4)
+                g.DrawLine(p, new Point(250, 150), new Point(300, 250));
+            // Left arm
+            if (numberOfBodyPart > 5)
+                g.DrawLine(p, new Point(250, 150), new Point(200, 250));
+            // Dead
+            if (numberOfBodyPart > 6)
+                g.DrawLine(p, new Point(210, 145), new Point(290, 145));
+        }
+
+        void GenerateGallows(Graphics g) // Gallows: sibenice/gia treo co
         {
             Pen p = new Pen(Color.Black, 2);
             // Phan duoi
@@ -94,18 +105,34 @@ namespace HangMan
         void alphabetCharacter_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
-            for (int i = 0; i < answerWord.Length; i++)
-            {
-                if(btn.Text == RemoveDiacritics(answerWord[i].ToString()))
-                {
-                    displayWord[i] = answerWord[i] + " ";
-                }
-            }
+            btn.Enabled = false;
 
-            ourWord.Text = String.Join("", displayWord.ToArray());
+            if (!openHidenChar(btn.Text))
+            {
+                numberOfBodyPart++;
+                canvas.Refresh();
+            }
         }
 
-        void generateWord()
+        bool openHidenChar(string choosenChar)
+        {
+            bool charFound = false;
+
+            for (int i = 0; i < answerWord.Length; i++)
+            {
+                if (choosenChar == RemoveDiacritics(answerWord[i].ToString()))
+                {
+                    displayWord[i] = answerWord[i] + " ";
+                    charFound = true;
+                }
+            }
+            ourWord.Text = String.Join("", displayWord.ToArray());
+
+            return charFound;
+        }
+       
+
+        void generateWordWithHiddenChars()
         {
             for (int i = 0; i < answerWord.Length; i++)
             {
@@ -121,7 +148,7 @@ namespace HangMan
                 }
 
             }
-            ourWord.Text = ourWord.Text.Remove(ourWord.Text.Length - 1);
+            ourWord.Text = ourWord.Text;
             ourWord.Font = new Font("Arial", 20);
             ourWord.Size = new Size(panel1.Width, panel1.Height);
             ourWord.TextAlign = ContentAlignment.MiddleCenter;
