@@ -19,7 +19,8 @@ namespace HangMan
             InitializeComponent();
             generateAlphabet();
 
-            ReadWordFromFile();
+           
+            //MessageBox.Show(GetRandomWordFromFile());
 
             generateWord();
 
@@ -96,9 +97,30 @@ namespace HangMan
 
         void generateWord()
         {
+            string abc = "ČESKÁ REPUBLIKA";
             Label ourWord = new Label();
             ourWord.Name = "ourWord";
-            ourWord.Text = "_ U O _   _ _ _   _ _ _";
+
+            //ourWord.Text = "_ U O _   _ _ _   _ _ _";
+
+            for (int i = 0; i < abc.Length; i++)
+            {
+                if(abc[i].ToString() == "Z")
+                {
+                    ourWord.Text += abc[i] + " ";
+                }
+                else if(abc[i].ToString() == " ")
+                {
+                    ourWord.Text += "   ";
+                }
+                else
+                {
+                    ourWord.Text += "_ ";
+                }
+
+            }
+            ourWord.Text = ourWord.Text.Remove(ourWord.Text.Length - 1);
+
             ourWord.Font = new Font("Arial", 20);
             ourWord.Size = new Size(panel1.Width, panel1.Height);
             ourWord.TextAlign = ContentAlignment.MiddleCenter;
@@ -108,18 +130,16 @@ namespace HangMan
             this.Controls.Add(panel1);
         }
 
-        void ReadWordFromFile()
+        string wordNeedToFind()
+        {
+            int level = 1;
+            readWordFromFile(level);
+            return randomWordFromFile();
+        }
+
+        string randomWordFromFile()
         {
             List<string> ourWord = new List<string>();
-            using (StreamWriter sw = File.CreateText(@"ourWords.txt"))
-            {
-                sw.WriteLine("POČÍTAČ");
-                sw.WriteLine("MATFYZ");
-                sw.WriteLine("PROGRAMOVÁNÍ");
-                sw.WriteLine("ČESKÁ REPUBLIKA");
-                sw.WriteLine("PRAHA");
-            }
-
             using (var sr = File.OpenText(@"ourWords.txt"))
             {
                 string word = sr.ReadLine();
@@ -128,6 +148,38 @@ namespace HangMan
                     ourWord.Add(word);
                     word = sr.ReadLine();
                 }
+            }
+
+            Random rd = new Random();
+            return ourWord[rd.Next(ourWord.Count)];
+        }
+
+        void readWordFromFile(int level)
+        {
+            switch (level)
+            {
+                case 0:
+                    using (StreamWriter sw = File.CreateText(@"ourWords.txt"))
+                    {
+                        sw.WriteLine("MATFYZ");
+                        sw.WriteLine("PRAHA");
+                    }
+                    break;
+                case 1:
+                    using (StreamWriter sw = File.CreateText(@"ourWords.txt"))
+                    {
+                        sw.WriteLine("POČÍTAČ");
+                        sw.WriteLine("INTERNET");
+                    }
+                    break;
+                case 2:
+                    using (StreamWriter sw = File.CreateText(@"ourWords.txt"))
+                    {
+                        sw.WriteLine("PROGRAMOVÁNÍ");
+                        sw.WriteLine("ČESKÁ REPUBLIKA");
+                    }
+                    break;
+
             }
         }
     }
