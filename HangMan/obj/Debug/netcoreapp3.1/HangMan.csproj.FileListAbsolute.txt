@@ -13,3 +13,5 @@ C:\Users\david\source\repos\HangMan\HangMan\obj\Debug\netcoreapp3.1\HangMan.cspr
 C:\Users\david\source\repos\HangMan\HangMan\obj\Debug\netcoreapp3.1\HangMan.dll
 C:\Users\david\source\repos\HangMan\HangMan\obj\Debug\netcoreapp3.1\HangMan.pdb
 C:\Users\david\source\repos\HangMan\HangMan\obj\Debug\netcoreapp3.1\HangMan.genruntimeconfig.cache
+C:\Users\david\source\repos\HangMan\HangMan\obj\Debug\netcoreapp3.1\HangMan.Menu.resources
+C:\Users\david\source\repos\HangMan\HangMan\obj\Debug\netcoreapp3.1\HangMan.SettingForm.resources

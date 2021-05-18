@@ -17,7 +17,7 @@ namespace HangMan
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new HangMan());
+            Application.Run(new Menu());
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace HangMan
+﻿namespace HangMan
 {
     partial class HangMan
     {
@@ -84,4 +83,3 @@ namespace HangMan
         private System.Windows.Forms.Panel panel1;
     }
 }
-

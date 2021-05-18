@@ -35,7 +35,15 @@ namespace HangMan
             Pen p = new Pen(Color.Black, 2);
             GenerateGallows(g);
             GenerateBodyPart(g, p, numberOfBodyPart);
-    
+            
+        }
+
+        void Check_Win_Lose()
+        {
+            if(numberOfBodyPart == 7) 
+            {
+                MessageBox.Show("Ngu");
+            }
         }
 
         void GenerateBodyPart(Graphics g, Pen p, int numberOfBodyPart)
@@ -60,7 +68,9 @@ namespace HangMan
                 g.DrawLine(p, new Point(250, 150), new Point(200, 250));
             // Dead
             if (numberOfBodyPart > 6)
+            {
                 g.DrawLine(p, new Point(210, 145), new Point(290, 145));
+            }
         }
 
         void GenerateGallows(Graphics g) // Gallows: sibenice/gia treo co
@@ -111,6 +121,7 @@ namespace HangMan
             {
                 numberOfBodyPart++;
                 canvas.Refresh();
+                Check_Win_Lose();
             }
         }
 
@@ -160,8 +171,20 @@ namespace HangMan
 
         string wordNeedToFind()
         {
-            int level = 2;
-            readWordFromFile(level);
+            int difficulty;
+            try
+            {
+                using (var sr = File.OpenText(@"dificulty.txt"))
+                {
+                    difficulty = int.Parse(sr.ReadLine());
+                }
+            }
+            catch
+            {
+                difficulty = 0;
+            }
+                     
+            readWordFromFile(difficulty);
             return randomWordFromFile();
         }
 
@@ -182,25 +205,25 @@ namespace HangMan
             return ourWord[rd.Next(ourWord.Count)];
         }
         
-        void readWordFromFile(int level)
+        void readWordFromFile(int difficulty)
         {
-            switch (level)
+            switch (difficulty)
             {
-                case 0:
+                case 0: // easy
                     using (StreamWriter sw = File.CreateText(@"ourWords.txt"))
                     {
                         sw.WriteLine("MATFYZ");
                         sw.WriteLine("PRAHA");
                     }
                     break;
-                case 1:
+                case 1: // medium
                     using (StreamWriter sw = File.CreateText(@"ourWords.txt"))
                     {
                         sw.WriteLine("POČÍTAČ");
                         sw.WriteLine("INTERNET");
                     }
                     break;
-                case 2:
+                case 2: // hard
                     using (StreamWriter sw = File.CreateText(@"ourWords.txt"))
                     {
                         sw.WriteLine("PROGRAMOVÁNÍ");
@@ -226,6 +249,12 @@ namespace HangMan
             }
 
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        }
+
+        private void HangMan_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+           
         }
     }
 }
