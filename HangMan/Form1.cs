@@ -42,7 +42,11 @@ namespace HangMan
         {
             if(numberOfBodyPart == 7) 
             {
-                MessageBox.Show("Ngu");
+                LoseGame();
+            }
+            if(!displayWord.Contains("_ "))
+            {
+                WinGame();
             }
         }
 
@@ -121,8 +125,8 @@ namespace HangMan
             {
                 numberOfBodyPart++;
                 canvas.Refresh();
-                Check_Win_Lose();
             }
+            Check_Win_Lose();
         }
 
         bool openHidenChar(string choosenChar)
@@ -157,7 +161,6 @@ namespace HangMan
                     ourWord.Text += "_ ";
                     displayWord.Add("_ ");
                 }
-
             }
             ourWord.Text = ourWord.Text;
             ourWord.Font = new Font("Arial", 20);
@@ -251,10 +254,47 @@ namespace HangMan
             return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
         }
 
+        void LoseGame()
+        {
+            DialogResult result = MessageBox.Show("Prohráli jste! Slovíčko bylo:\n" + answerWord + "\nChcete hrát znovu?", "Konec Hry", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                showMenu();
+            }
+            if (result == DialogResult.Yes)
+            {
+                HangMan hangMan = new HangMan();
+                this.Hide();
+                hangMan.Show();
+            }
+        }
+
+        void WinGame()
+        {
+            DialogResult result = MessageBox.Show("Gratuluji, Vyhrali jste! Slovíčko bylo:\n" + answerWord + "\nChcete hrát znovu?", "Konec Hry", MessageBoxButtons.YesNo);
+            if (result == DialogResult.No)
+            {
+                showMenu();
+            }
+            if (result == DialogResult.Yes)
+            {
+                HangMan hangMan = new HangMan();
+                this.Hide();
+                hangMan.Show();
+            }
+        }
+
         private void HangMan_FormClosing(object sender, FormClosingEventArgs e)
         {
-            
-           
+            showMenu();
+        }
+
+
+        void showMenu()
+        {
+            this.Hide();
+            Menu m = new Menu();
+            m.Show();
         }
     }
 }

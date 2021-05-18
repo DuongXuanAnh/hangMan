@@ -48,9 +48,9 @@
             // pnl_alphabet
             // 
             this.pnl_alphabet.BackColor = System.Drawing.SystemColors.Control;
-            this.pnl_alphabet.Location = new System.Drawing.Point(474, 322);
+            this.pnl_alphabet.Location = new System.Drawing.Point(474, 355);
             this.pnl_alphabet.Name = "pnl_alphabet";
-            this.pnl_alphabet.Size = new System.Drawing.Size(561, 127);
+            this.pnl_alphabet.Size = new System.Drawing.Size(561, 94);
             this.pnl_alphabet.TabIndex = 1;
             // 
             // panel1
@@ -58,7 +58,7 @@
             this.panel1.BackColor = System.Drawing.SystemColors.Control;
             this.panel1.Location = new System.Drawing.Point(474, 13);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(561, 303);
+            this.panel1.Size = new System.Drawing.Size(561, 336);
             this.panel1.TabIndex = 2;
             // 
             // HangMan
@@ -71,6 +71,7 @@
             this.Controls.Add(this.canvas);
             this.Name = "HangMan";
             this.Text = "Hang Man";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.HangMan_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.canvas)).EndInit();
             this.ResumeLayout(false);
 
