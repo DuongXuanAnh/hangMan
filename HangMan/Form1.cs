@@ -32,9 +32,10 @@ namespace HangMan
         {
             Graphics g = e.Graphics;
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            Pen p = new Pen(Color.Black, 2);
-            GenerateGallows(g);
-            GenerateBodyPart(g, p, numberOfBodyPart);
+
+            DrawPicture dp = new DrawPicture();
+            dp.GenerateGallows(g, canvas.Height);
+            dp.GenerateBodyPart(g, numberOfBodyPart);
             
         }
 
@@ -48,48 +49,6 @@ namespace HangMan
             {
                 WinGame();
             }
-        }
-
-        void GenerateBodyPart(Graphics g, Pen p, int numberOfBodyPart)
-        {
-            // Head
-            if (numberOfBodyPart > 0)              
-                g.DrawEllipse(p, 250 - 65 / 2, 70, 65, 65);
-            // Body
-            if (numberOfBodyPart > 1)
-                g.DrawLine(p, new Point(250, 135), new Point(250, 250));
-            // Right leg
-            if (numberOfBodyPart > 2)
-                g.DrawLine(p, new Point(250, 250), new Point(300, 370));
-            // Left leg
-            if (numberOfBodyPart > 3)
-                g.DrawLine(p, new Point(250, 250), new Point(200, 370));
-            // Right arm
-            if (numberOfBodyPart > 4)
-                g.DrawLine(p, new Point(250, 150), new Point(300, 250));
-            // Left arm
-            if (numberOfBodyPart > 5)
-                g.DrawLine(p, new Point(250, 150), new Point(200, 250));
-            // Dead
-            if (numberOfBodyPart > 6)
-            {
-                g.DrawLine(p, new Point(210, 145), new Point(290, 145));
-            }
-        }
-
-        void GenerateGallows(Graphics g) // Gallows: sibenice/gia treo co
-        {
-            Pen p = new Pen(Color.Black, 2);
-            // Phan duoi
-            g.DrawLine(p, new Point(30, canvas.Height - 30), new Point(200, canvas.Height - 30));
-            // Coc
-            g.DrawLine(p, new Point(80, 30), new Point(80, canvas.Height - 30));
-            // Coc ngang
-            g.DrawLine(p, new Point(80, 30), new Point(250, 30));
-            // Coc cheo
-            g.DrawLine(p, new Point(80, 80), new Point(130, 30));
-            // Coc treo
-            g.DrawLine(p, new Point(250, 30), new Point(250, 70));
         }
 
         void generateAlphabet()
@@ -120,7 +79,6 @@ namespace HangMan
         {
             Button btn = sender as Button;
             btn.Enabled = false;
-
             if (!openHidenChar(btn.Text))
             {
                 numberOfBodyPart++;
@@ -145,8 +103,7 @@ namespace HangMan
 
             return charFound;
         }
-       
-
+      
         void generateWordWithHiddenChars()
         {
             for (int i = 0; i < answerWord.Length; i++)
@@ -187,28 +144,21 @@ namespace HangMan
                 difficulty = 0;
             }
                      
-            readWordFromFile(difficulty);
+            createWordFile(difficulty);
             return randomWordFromFile();
         }
 
         string randomWordFromFile()
         {
-            List<string> ourWord = new List<string>();
-            using (var sr = File.OpenText(@"ourWords.txt"))
-            {
-                string word = sr.ReadLine();
-                while (word != null)
-                {
-                    ourWord.Add(word);
-                    word = sr.ReadLine();
-                }
-            }
+            var words = File.ReadAllLines(@"ourWords.txt");
+            var r = new Random();
+            var randomLineNumber = r.Next(0, words.Length);
+            string word = words[randomLineNumber];
 
-            Random rd = new Random();
-            return ourWord[rd.Next(ourWord.Count)];
+            return word;
         }
         
-        void readWordFromFile(int difficulty)
+        void createWordFile(int difficulty)
         {
             switch (difficulty)
             {
@@ -288,7 +238,6 @@ namespace HangMan
         {
             showMenu();
         }
-
 
         void showMenu()
         {
