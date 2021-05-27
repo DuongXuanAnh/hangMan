@@ -41,7 +41,7 @@ namespace HangMan
             this.comboBox1.Items.AddRange(new object[] {
             "Snadný / Easy",
             "Střední / Medium",
-            "Težký / Hard"});
+            "Obtížné / Hard"});
             this.comboBox1.Location = new System.Drawing.Point(85, 74);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(260, 39);
@@ -78,6 +78,7 @@ namespace HangMan
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
             this.Name = "SettingForm";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "SettingForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SettingForm_FormClosing);
             this.ResumeLayout(false);

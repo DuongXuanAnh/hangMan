@@ -167,6 +167,8 @@ namespace HangMan
                     {
                         sw.WriteLine("MATFYZ");
                         sw.WriteLine("PRAHA");
+                        sw.WriteLine("CS GO");
+                        sw.WriteLine("DOTA");
                     }
                     break;
                 case 1: // medium
@@ -174,6 +176,8 @@ namespace HangMan
                     {
                         sw.WriteLine("POČÍTAČ");
                         sw.WriteLine("INTERNET");
+                        sw.WriteLine("ROUTER");
+                        sw.WriteLine("SWITCH");
                     }
                     break;
                 case 2: // hard
@@ -181,6 +185,8 @@ namespace HangMan
                     {
                         sw.WriteLine("PROGRAMOVÁNÍ");
                         sw.WriteLine("ČESKÁ REPUBLIKA");
+                        sw.WriteLine("ALGORITMIZACE");
+                        sw.WriteLine("Andrej Babiš");
                     }
                     break;
 
